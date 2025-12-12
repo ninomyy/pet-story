@@ -136,8 +136,17 @@
         <section id="createPage" class="page hidden">
             <div class="container-narrow">
                 <h2 class="mt-xl mb-lg">新しい投稿を作成</h2>
-                <div class="card">
-                    <form id="createPostForm">
+                <h2 class="mt-xl mb-lg">新しい投稿を作成</h2>
+
+                <!-- ログイン要求メッセージ -->
+                <div id="createLoginRequest" class="card text-center hidden" style="padding: var(--spacing-2xl);">
+                    <h2>ログインが必要です</h2>
+                    <p class="text-muted">投稿するにはペットのプロフィールを作成してください</p>
+                    <button class="btn btn-primary btn-lg mt-md" onclick="showAuthModal()">プロフィールを作成</button>
+                </div>
+
+                <div id="createPostContent" class="card">
+                    <form id="createPostForm" onsubmit="handleCreatePost(event)">
                         <div class="form-group">
                             <label for="petSelect">ペットを選択</label>
                             <select id="petSelect" class="input mt-sm">

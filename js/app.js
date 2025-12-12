@@ -563,23 +563,19 @@ function handleLike(postId) {
 function setupCreatePage() {
     const currentPet = PetStoryData.getCurrentPet();
     const petSelect = document.getElementById('petSelect');
+    const loginRequest = document.getElementById('createLoginRequest');
+    const postContent = document.getElementById('createPostContent');
 
     if (!currentPet) {
         // ログインしていない場合
-        const createPage = document.getElementById('createPage');
-        if (createPage) {
-            createPage.innerHTML = `
-                <div class="container-narrow">
-                    <div class="card text-center mt-xl" style="padding: var(--spacing-2xl);">
-                        <h2>ログインが必要です</h2>
-                        <p class="text-muted">投稿するにはペットのプロフィールを作成してください</p>
-                        <button class="btn btn-primary btn-lg mt-md" onclick="window.showAuthModal()">プロフィールを作成</button>
-                    </div>
-                </div>
-            `;
-        }
+        if (loginRequest) loginRequest.classList.remove('hidden');
+        if (postContent) postContent.classList.add('hidden');
         return;
     }
+
+    // ログインしている場合
+    if (loginRequest) loginRequest.classList.add('hidden');
+    if (postContent) postContent.classList.remove('hidden');
 
     // ペット選択ドロップダウン
     if (petSelect) {
@@ -629,6 +625,7 @@ function handleGenerateVoice() {
 // 投稿作成
 function handleCreatePost(e) {
     e.preventDefault();
+    console.log('handleCreatePost called');
 
     const currentPet = PetStoryData.getCurrentPet();
     if (!currentPet) {
@@ -1387,6 +1384,7 @@ window.handleResetData = handleResetData;
 window.handleLogout = handleLogout;
 window.showNewChatModal = showNewChatModal;
 window.openCommentModal = openCommentModal;
+window.handleCreatePost = handleCreatePost;
 window.closeCommentModal = closeCommentModal;
 window.showResetPasswordModal = showResetPasswordModal;
 window.closeResetPasswordModal = closeResetPasswordModal;

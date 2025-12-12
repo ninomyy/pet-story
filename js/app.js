@@ -639,15 +639,15 @@ function handleCreatePost(e) {
     const imageSrc = isImageVisible ? imagePreview.src : '';
 
     if (!caption && !imageSrc) {
-        alert('写真またはキャプションを入力してください');
+        // 何も入力がない場合は何もせず終了（メッセージも出さない）
         return;
     }
 
     // 片方のみの場合の確認
     if (!caption && imageSrc) {
-        if (!confirm('キャプションがありませんが、写真のみで投稿しますか？')) return;
+        if (!confirm('テキストが入力されていませんが、写真のみで投稿しますか？')) return;
     } else if (caption && !imageSrc) {
-        if (!confirm('写真がありませんが、テキストのみで投稿しますか？')) return;
+        if (!confirm('写真が選択されていませんが、テキストのみで投稿しますか？')) return;
     }
 
     // 新しい投稿作成

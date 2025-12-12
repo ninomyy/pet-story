@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetStory - ペットが主役のSNS</title>
+    <meta name="description" content="ペットが主人公となるSNSプラットフォーム。大切なペットの日常を楽しく共有しよう！">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="#" class="navbar-brand" onclick="showPage('home'); return false;">🐾 PetStory</a>
+            <ul class="navbar-menu" id="navMenu">
+                <li><a href="javascript:void(0)" class="navbar-link active" data-page="home"
+                        onclick="showPage('home')">ホーム</a></li>
+                <li><a href="javascript:void(0)" class="navbar-link" data-page="timeline"
+                        onclick="showPage('timeline')">タイムライン</a></li>
+                <li><a href="javascript:void(0)" class="navbar-link" data-page="create"
+                        onclick="showPage('create')">投稿作成</a></li>
+                <li><a href="javascript:void(0)" class="navbar-link" data-page="profile"
+                        onclick="showPage('profile')">プロフィール</a></li>
+
+            </ul>
+            <div style="display: flex; gap: var(--spacing-sm);">
+
+                <div id="guestButtons" style="display: flex; gap: var(--spacing-sm);">
+                    <button class="btn btn-secondary" id="signupBtn">新規登録</button>
+                    <button class="btn btn-primary" id="loginBtn">ログイン</button>
+                </div>
+                <button class="btn btn-primary hidden" id="currentUserBtn">ログイン中</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main id="mainContent">
+        <!-- ホームページ -->
+        <section id="homePage" class="page active">
+            <!-- ヒーローセクション -->
+            <div class="hero">
+                <div class="container text-center">
+                    <h1 class="hero-title slide-up">
+                        ペットが主役の<br>新しいSNS体験
+                    </h1>
+                    <p class="hero-subtitle slide-up">
+                        大切なペットの視点で世界を共有しよう
+                    </p>
+                    <div class="hero-buttons slide-up">
+                        <button class="btn btn-primary btn-lg" id="getStartedBtn">
+                            今すぐ始める
+                        </button>
+                        <button class="btn btn-secondary btn-lg" id="learnMoreBtn">
+                            詳しく見る
+                        </button>
+                    </div>
+                    <div class="hero-image mt-xl">
+                        <img id="heroImage" src="images/hero.png" alt="Happy pets"
+                            style="max-width: 600px; width: 100%; border-radius: 24px; box-shadow: var(--shadow-xl);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 特徴セクション -->
+            <div class="features">
+                <div class="container">
+                    <h2 class="text-center mb-xl">PetStoryの特徴</h2>
+                    <div class="grid grid-3">
+                        <div class="card hover-lift">
+                            <div class="feature-icon">🎭</div>
+                            <h3>ペット目線の投稿</h3>
+                            <p class="text-muted">
+                                ペットが自分で投稿しているような楽しい文章を簡単に作成
+                            </p>
+                        </div>
+                        <div class="card hover-lift">
+                            <div class="feature-icon">📸</div>
+                            <h3>成長の記録</h3>
+                            <p class="text-muted">
+                                大切な思い出を時系列で美しく保存
+                            </p>
+                        </div>
+                        <div class="card hover-lift">
+                            <div class="feature-icon">🏆</div>
+                            <h3>バッジコレクション</h3>
+                            <p class="text-muted">
+                                投稿や活動で特別なバッジを獲得
+                            </p>
+                        </div>
+                        <div class="card hover-lift">
+                            <div class="feature-icon">🌟</div>
+                            <h3>かわいいフィルター(未実装)</h3>
+                            <p class="text-muted">
+                                ペット専用のキュートなエフェクト
+                            </p>
+                        </div>
+                        <div class="card hover-lift">
+                            <div class="feature-icon">🎉</div>
+                            <h3>記念日のお祝い(未実装)</h3>
+                            <p class="text-muted">
+                                誕生日や特別な日を自動でリマインド
+                            </p>
+                        </div>
+                        <div class="card hover-lift">
+                            <div class="feature-icon">🐕</div>
+                            <h3>ペット友達検索(未実装)</h3>
+                            <p class="text-muted">
+                                近くのペット仲間を見つけよう
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- タイムラインページ -->
+        <section id="timelinePage" class="page hidden">
+            <div class="container-narrow">
+                <h2 class="mt-xl mb-lg">タイムライン</h2>
+                <div id="timelinePosts" class="timeline-posts">
+                    <!-- 投稿はJavaScriptで動的に生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 投稿作成ページ -->
+        <section id="createPage" class="page hidden">
+            <div class="container-narrow">
+                <h2 class="mt-xl mb-lg">新しい投稿を作成</h2>
+                <div class="card">
+                    <form id="createPostForm">
+                        <div class="form-group">
+                            <label for="petSelect">ペットを選択</label>
+                            <select id="petSelect" class="input mt-sm">
+                                <!-- JavaScriptで動的に生成 -->
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-md">
+                            <label for="postImage">写真をアップロード</label>
+                            <div class="image-upload mt-sm" id="imageUploadArea">
+                                <input type="file" id="postImage" accept="image/*" class="hidden">
+                                <div class="upload-placeholder" id="uploadPlaceholder">
+                                    <div class="upload-icon">📸</div>
+                                    <p>クリックして写真を選択</p>
+                                </div>
+                                <img id="imagePreview" class="hidden"
+                                    style="max-width: 100%; border-radius: var(--radius-md);">
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-md">
+                            <label for="postCaption">キャプション</label>
+                            <textarea id="postCaption" class="textarea mt-sm"
+                                placeholder="ペットの気持ちを書いてみよう..."></textarea>
+                            <button type="button" class="btn btn-secondary mt-sm" id="generateVoiceBtn">
+                                🎭 ペット目線で書き直す
+                            </button>
+                        </div>
+
+                        <div class="form-group mt-md">
+                            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                                投稿する
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- プロフィールページ -->
+        <section id="profilePage" class="page hidden">
+            <div class="container-narrow">
+                <div class="profile-header mt-xl">
+                    <div class="card">
+                        <div class="flex-between">
+                            <div class="flex" style="gap: var(--spacing-lg); align-items: center;">
+                                <img id="profileAvatar" class="avatar avatar-xl" alt="Pet avatar">
+                                <div>
+                                    <h2 id="profileName" class="mb-0"></h2>
+                                    <p id="profileBio" class="text-muted mt-sm mb-0"></p>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" id="editProfileBtn">
+                                編集
+                            </button>
+                        </div>
+
+                        <div class="profile-stats mt-lg flex" style="gap: var(--spacing-xl);">
+                            <div class="stat">
+                                <div class="stat-value" id="postCount">0</div>
+                                <div class="text-muted">投稿</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="followerCount">0</div>
+                                <div class="text-muted">フォロワー</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="badgeCount">0</div>
+                                <div class="text-muted">バッジ</div>
+                            </div>
+                        </div>
+
+                        <div class="profile-badges mt-lg">
+                            <h3>獲得バッジ</h3>
+                            <div id="badgeList" class="flex mt-sm" style="gap: var(--spacing-sm); flex-wrap: wrap;">
+                                <!-- JavaScriptで動的に生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="mt-xl mb-lg">投稿</h3>
+                <div id="profilePosts" class="grid grid-2">
+                    <!-- JavaScriptで動的に生成 -->
+                </div>
+            </div>
+        </section>
+        </section>
+
+
+    </main>
+
+    <!-- アカウント削除確認モーダル -->
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal text-center">
+            <div style="font-size: 3rem; margin-bottom: var(--spacing-sm);">⚠️</div>
+            <h2 class="text-danger" style="color: #ff6b6b;">本当に削除しますか？</h2>
+            <p style="margin-bottom: var(--spacing-sm);">アカウントを削除すると、以下のデータが永久に失われます。</p>
+            <ul
+                style="text-align: left; background: #fff5f5; padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--radius-md); margin-bottom: var(--spacing-lg); color: #c53030;">
+                <li>全ての投稿データ</li>
+                <li>獲得したバッジ</li>
+                <li>プロフィール情報</li>
+            </ul>
+            <p class="text-bold mb-lg">この操作は取り消せません。</p>
+
+            <div class="flex" style="gap: var(--spacing-md);">
+                <button class="btn btn-secondary" onclick="closeDeleteConfirmModal()" style="flex: 1;">キャンセル</button>
+                <button class="btn btn-primary" onclick="executeDeleteAccount()"
+                    style="flex: 1; background: #ff6b6b; border-color: #ff6b6b; color: white;">削除する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新規登録/ログインモーダル -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal">
+            <h2>PetStoryへようこそ！</h2>
+            <p class="text-muted">ペットのプロフィールを作成しましょう</p>
+
+            <form id="petProfileForm" class="mt-md">
+                <input type="hidden" id="petId">
+                <div class="form-group">
+                    <label for="petName">ペットの名前</label>
+                    <input type="text" id="petName" class="input mt-sm" placeholder="例: ポチ" required>
+                </div>
+
+                <div class="form-group mt-sm">
+                    <label for="petPassword">パスワード</label>
+                    <input type="password" id="petPassword" class="input mt-sm" placeholder="パスワードを設定" required>
+                    <p class="text-muted" style="font-size: 0.8rem; margin-top: 0.25rem;">※ログイン時に使用します</p>
+                </div>
+
+                <div class="form-group mt-sm">
+                    <label for="petSpecies">種類</label>
+                    <select id="petSpecies" class="input mt-sm" required>
+                        <option value="">選択してください</option>
+                        <option value="dog">犬 🐕</option>
+                        <option value="cat">猫 🐱</option>
+                        <option value="bird">鳥 🐦</option>
+                        <option value="rabbit">うさぎ 🐰</option>
+                        <option value="hamster">ハムスター 🐹</option>
+                        <option value="other">その他</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-sm">
+                    <label for="petBio">自己紹介</label>
+                    <textarea id="petBio" class="textarea mt-sm" placeholder="ペットについて教えてください..." required></textarea>
+                </div>
+
+                <div class="form-group mt-sm">
+                    <label for="petAvatar">プロフィール写真</label>
+                    <input type="file" id="petAvatar" class="input mt-sm" accept="image/*">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg mt-md" style="width: 100%;">
+                    プロフィールを作成
+                </button>
+
+                <button type="button" id="deleteAccountBtn" class="btn mt-md hidden"
+                    style="width: 100%; border: 1px solid #ff6b6b; color: #ff6b6b; background: transparent;"
+                    onclick="handleDeleteAccount()">
+                    アカウントを削除
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- コメントモーダル -->
+    <div id="commentModal" class="modal-overlay">
+        <div class="modal slide-up">
+            <div class="flex-between mb-md">
+                <h2>コメント</h2>
+                <button class="btn btn-icon" onclick="closeCommentModal()">✕</button>
+            </div>
+
+            <div id="commentsList" style="max-height: 300px; overflow-y: auto; margin-bottom: var(--spacing-md);">
+                <!-- コメントがここに挿入されます -->
+            </div>
+
+            <form id="commentForm">
+                <input type="hidden" id="commentPostId">
+                <div class="flex" style="gap: var(--spacing-sm);">
+                    <input type="text" id="commentInput" class="input" placeholder="コメントを書く..." required>
+                    <button type="submit" class="btn btn-primary">送信</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ログインモーダル -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <h2 id="loginModalTitle">ログイン</h2>
+            <p id="loginModalDesc" class="text-muted">ログインするペットを選択してください</p>
+
+            <!-- ユーザーリスト表示エリア -->
+            <div id="loginUserList" class="grid grid-3 mt-lg" style="max-height: 400px; overflow-y: auto;">
+                <!-- JSで動的に生成 -->
+            </div>
+
+            <!-- パスワード入力エリア（最初は非表示） -->
+            <div id="loginPasswordArea" class="hidden mt-lg">
+                <div class="flex-center mb-lg">
+                    <img id="loginSelectedAvatar" class="avatar avatar-lg" src="" alt="">
+                </div>
+                <h3 id="loginSelectedName" class="text-center"></h3>
+
+                <div class="form-group mt-md">
+                    <label for="loginPasswordInput">パスワード</label>
+                    <input type="password" id="loginPasswordInput" class="input mt-sm" placeholder="パスワードを入力">
+                    <div class="flex-between mt-xs">
+                        <p id="loginErrorMsg" class="text-danger hidden"
+                            style="color: #ff6b6b; font-size: 0.875rem; margin: 0;">パスワードが一致しません</p>
+                        <a href="#" onclick="showResetPasswordModal(); return false;" class="text-secondary"
+                            style="font-size: 0.8rem;">パスワードを忘れた場合</a>
+                    </div>
+                </div>
+
+                <div class="flex mt-lg" style="gap: var(--spacing-md);">
+                    <button id="loginBackBtn" class="btn btn-secondary" style="flex: 1;">戻る</button>
+                    <button id="loginSubmitBtn" class="btn btn-primary" style="flex: 1;">ログイン</button>
+                </div>
+            </div>
+
+            <div class="text-center mt-xl pt-lg" style="border-top: 1px solid var(--border-light);">
+                <p class="text-muted mb-sm">アカウントをお持ちでないですか？</p>
+                <button id="switchToSignupBtn" class="btn btn-secondary btn-sm">新規登録を作成</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- パスワードリセットモーダル -->
+    <div class="modal-overlay" id="resetPasswordModal">
+        <div class="modal">
+            <h2 class="mb-md">パスワードの再設定</h2>
+            <p class="text-muted mb-lg">本人確認のため、登録情報を入力してください。</p>
+
+            <form id="resetPasswordForm">
+                <input type="hidden" id="resetTargetPetId">
+
+                <div class="form-group mb-md">
+                    <label>ペットの名前</label>
+                    <input type="text" id="resetPetName" class="input" required>
+                </div>
+
+                <div class="form-group mb-md">
+                    <label>ペットの種類</label>
+                    <select id="resetPetSpecies" class="input" required>
+                        <option value="dog">犬</option>
+                        <option value="cat">猫</option>
+                        <option value="bird">鳥</option>
+                        <option value="rabbit">うさぎ</option>
+                        <option value="hamster">ハムスター</option>
+                        <option value="other">その他</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-lg">
+                    <label>新しいパスワード</label>
+                    <input type="password" id="resetNewPassword" class="input" required minlength="4">
+                </div>
+
+                <div class="flex" style="gap: var(--spacing-md);">
+                    <button type="button" class="btn btn-secondary" onclick="closeResetPasswordModal()"
+                        style="flex: 1;">キャンセル</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">再設定する</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
